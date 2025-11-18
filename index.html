@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>A10 Cookie Assignment</title>
+
+    <style>
+        /* ====== GLOBAL STYLE ====== */
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+            margin-top: 50px;
+            font-size: 2.2rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        }
+
+        /* ====== COOKIE DISPLAY BOX ====== */
+        #cookieBox {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            padding: 25px;
+            width: 350px;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        #cookieBox:hover {
+            transform: scale(1.03);
+        }
+
+        #cookieDisplay {
+            font-size: 1.2rem;
+        }
+
+        /* ====== FOOTER ====== */
+        footer {
+            margin-top: auto;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* ====== ANIMATION ====== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
+
+    <script>
+        // Set a cookie
+        function setCookie(name, value, days) {
+            const d = new Date();
+            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
+
+        // Get a cookie
+        function getCookie(name) {
+            let cookieName = name + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let cookieArray = decodedCookie.split(';');
+
+            for (let c of cookieArray) {
+                c = c.trim();
+                if (c.indexOf(cookieName) === 0) {
+                    return c.substring(cookieName.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        // Run when page loads
+        window.onload = function() {
+            let userCookie = getCookie("myCookie");
+
+            if (userCookie === "") {
+                let cookieValue = prompt("Enter a value for your cookie:");
+                if (cookieValue !== null && cookieValue !== "") {
+                    setCookie("myCookie", cookieValue, 7);
+                    userCookie = cookieValue;
+                }
+            }
+
+            document.getElementById("cookieDisplay").innerHTML =
+                "Cookie Value: <strong>" + userCookie + "</strong>";
+        };
+    </script>
+</head>
+
+<body>
+
+<h1>A10 Cookie Demo</h1>
+
+<div id="cookieBox">
+    <p id="cookieDisplay">Loading cookie...</p>
+</div>
+
+<footer>
+    © 2025 YOUR NAME — Assignment A10 (Replace with correct due date)
+</footer>
+
+</body>
+</html>
